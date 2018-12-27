@@ -5,7 +5,8 @@ const {
   GraphQLInt,
   GraphQLString,
   GraphQLSchema,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 } = graphql;
 
 //we wrapped the fields of CompanyType and UserType with an arrow function to resolve the
@@ -16,8 +17,6 @@ const {
 //graphQL internally exectues the arrow function for fields in CompanyType and the UserType is
 //inside the closure scope of the arrow function
 //Same goes true for the arrow function for fields in UserType.
-
-
 
 const CompanyType = new GraphQLObjectType({
   name: "Company",
@@ -79,6 +78,27 @@ const RootQuery = new GraphQLObjectType({
   }
 });
 
+const mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLString) },
+        companyId: { type: GraphQLString }
+      },
+      resolve(parentValue, { name, age }) {
+        return axios
+          .post(`http://localhost:3000/users`, { name, age })
+          .then(res => res.data);
+      }
+    },
+
+  }
+});
+
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 });

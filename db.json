@@ -1,12 +1,32 @@
 {
   "users": [
-    { "id": "11", "name": "John", "age": 21, "companyId": "1" },
-    { "id": "12", "name": "Jane", "age": 22, "companyId": "2" },
-    { "id": "13", "name": "Jacob", "age": 23, "companyId": "2" }
+    {
+      "id": "12",
+      "name": "Jane",
+      "age": 22,
+      "companyId": "2"
+    },
+    {
+      "name": "Manish",
+      "age": "26",
+      "id": "08FPdo-"
+    },
+    {
+      "name": "Sarthak",
+      "age": "26",
+      "id": "7HXrKgQ"
+    }
   ],
   "companies": [
-    { "id": "1", "name": "Apple", "description": "iphone" },
-    { "id": "2", "name": "Google", "description": "search" }
+    {
+      "id": "1",
+      "name": "Apple",
+      "description": "iphone"
+    },
+    {
+      "id": "2",
+      "name": "Google",
+      "description": "search"
+    }
   ]
 }
-
