@@ -8,9 +8,20 @@ const {
   GraphQLList
 } = graphql;
 
+//we wrapped the fields of CompanyType and UserType with an arrow function to resolve the
+//issue of circular refernces.
+//We converted fields to an arrow function that returns an object
+//the function gets defined but doesnt get executed untill after the entire file is executed
+//so the file gets exectued first and hence companyType and UserType is defined first
+//graphQL internally exectues the arrow function for fields in CompanyType and the UserType is
+//inside the closure scope of the arrow function
+//Same goes true for the arrow function for fields in UserType.
+
+
+
 const CompanyType = new GraphQLObjectType({
   name: "Company",
-  fields: {
+  fields: () => ({
     id: { type: GraphQLString },
     name: { type: GraphQLString },
     description: { type: GraphQLString },
@@ -22,12 +33,12 @@ const CompanyType = new GraphQLObjectType({
           .then(res => res.data);
       }
     }
-  }
+  })
 });
 
 const UserType = new GraphQLObjectType({
   name: "User",
-  fields: {
+  fields: () => ({
     id: { type: GraphQLString },
     name: { type: GraphQLString },
     age: { type: GraphQLInt },
@@ -39,7 +50,7 @@ const UserType = new GraphQLObjectType({
           .then(response => response.data);
       }
     }
-  }
+  })
 });
 
 const RootQuery = new GraphQLObjectType({
