@@ -1,5 +1,5 @@
 const graphql = require("graphql");
-const _ = require("lodash");
+const axios = require("axios");
 const { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLSchema } = graphql;
 
 const users = [
@@ -23,7 +23,11 @@ const RootQuery = new GraphQLObjectType({
       type: UserType,
       args: { id: { type: GraphQLString } },
       resolve(parentValue, args) {
-        return _.find(users, { id: args.id });
+        return axios
+          .get(`http://localhost:3000/users/${args.id}`)
+          .then(response => response.data);
+        //we are pulling the data out of response because the data returned by
+        //axios is wrappped up as {data:{response}}
       }
     }
   }
